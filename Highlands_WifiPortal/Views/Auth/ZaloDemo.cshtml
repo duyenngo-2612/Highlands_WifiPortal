@@ -1,0 +1,208 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <title>Zalo OA Demo</title>
+
+    <style>
+        body {
+            margin: 0;
+            background: #dfe4ec;
+            font-family: Arial, sans-serif;
+        }
+
+        .chat-container {
+            width: 420px;
+            height: 100vh;
+            margin: auto;
+            background: #e9edf5;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .topbar {
+            background: linear-gradient(90deg, #0068ff, #009dff);
+            color: white;
+            padding: 18px;
+            display: flex;
+            align-items: center;
+        }
+
+        .avatar {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            overflow: hidden;
+            background: white;
+            margin-right: 12px;
+        }
+
+            .avatar img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+        .oa-info {
+            flex: 1;
+        }
+
+        .oa-name {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .oa-sub {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .chat-body {
+            flex: 1;
+            padding: 25px 18px;
+        }
+
+        .time-label {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+            .time-label span {
+                background: rgba(0,0,0,0.08);
+                padding: 8px 18px;
+                border-radius: 20px;
+                color: #555;
+                font-size: 14px;
+            }
+
+        .message-row {
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .mini-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 12px;
+            background: white;
+        }
+
+            .mini-avatar img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+        .bubble {
+            background: white;
+            border-radius: 18px;
+            padding: 22px;
+            width: 290px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+
+        .otp-title {
+            font-size: 18px;
+            color: #222;
+            margin-bottom: 18px;
+        }
+
+        .otp-code {
+            text-align: center;
+            font-size: 54px;
+            color: #0072ff;
+            font-weight: bold;
+            letter-spacing: 8px;
+            margin-bottom: 18px;
+        }
+
+        .otp-desc {
+            color: #666;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .msg-time {
+            margin-top: 18px;
+            color: #999;
+            font-size: 13px;
+        }
+
+        .chat-input {
+            background: white;
+            padding: 16px;
+            border-top: 1px solid #ddd;
+            color: #888;
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="chat-container">
+
+        <div class="topbar">
+
+            <div class="avatar">
+                <img src="/images/highlands-logo.png" />
+            </div>
+
+            <div class="oa-info">
+                <div class="oa-name">Highlands Coffee OA</div>
+                <div class="oa-sub">Tài khoản OA</div>
+            </div>
+
+        </div>
+
+        <div class="chat-body">
+
+            <div class="time-label">
+                <span>Hôm nay</span>
+            </div>
+
+            <div class="message-row">
+
+                <div class="mini-avatar">
+                    <img src="/images/highlands-logo.png" />
+                </div>
+
+                <div class="bubble">
+
+                    <div class="otp-title">
+                        Mã OTP đăng nhập WiFi của bạn là:
+                    </div>
+
+                    <div class="otp-code">
+                        @ViewBag.Otp
+                    </div>
+
+                    <div class="otp-desc">
+                        Mã có hiệu lực trong 5 phút.
+                        Vui lòng không chia sẻ mã này với người khác.
+                    </div>
+
+                    <div class="msg-time">
+                        09:41
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="chat-input">
+            Tin nhắn
+        </div>
+
+    </div>
+
+</body>
+</html>

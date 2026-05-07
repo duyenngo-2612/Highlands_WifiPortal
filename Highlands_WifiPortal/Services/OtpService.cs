@@ -58,6 +58,7 @@ namespace Highlands_WifiPortal.Services
         // 3. Verify OTP
         public bool VerifyOtp(string phone, string otp)
         {
+
             var record = _context.OtpLogs
                 .Where(x => x.PhoneNumber == phone && x.OTPCode == otp)
                 .OrderByDescending(x => x.SentAt)

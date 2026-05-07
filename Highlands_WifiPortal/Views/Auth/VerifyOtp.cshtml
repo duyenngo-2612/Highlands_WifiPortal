@@ -1,4 +1,5 @@
-﻿@{
+﻿
+@{
     Layout = null;
 }
 <!DOCTYPE html>
@@ -112,3 +113,8 @@
     </div>
 </body>
 </html>
+<script>
+    window.open('/Auth/ZaloDemo?otp=@TempData["DemoOtp"]',
+        '_blank',
+        'width=400,height=700');
+</script>

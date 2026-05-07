@@ -13,5 +13,6 @@ namespace Highlands_WifiPortal.Data
 
         public DbSet<OtpLog> OtpLogs { get; set; }
         public DbSet<Customer> Customers { get; set; }
+        public DbSet<AccessSession> AccessSessions { get; set; }
     }
 }

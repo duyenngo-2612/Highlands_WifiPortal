@@ -1,21 +1,27 @@
-﻿using Highlands_WifiPortal.Services;
+﻿using Highlands_WifiPortal.Data;
+using Highlands_WifiPortal.Models;
+using Highlands_WifiPortal.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
+using static System.Net.WebRequestMethods;
 
 namespace Highlands_WifiPortal.Controllers
 {
     public class AuthController : Controller
     {
-        // Khai báo các service của Trình và Nhã để sử dụng (Dependency Injection)
+        // Khai báo các service
         private readonly OtpService _otpService;
         private readonly ZaloApiService _zaloApiService;
+        private readonly ApplicationDbContext _context;
 
-        public AuthController(OtpService otpService, ZaloApiService zaloApiService)
+        public AuthController(OtpService otpService,ZaloApiService zaloApiService,ApplicationDbContext context)
         {
             _otpService = otpService;
             _zaloApiService = zaloApiService;
+            _context = context;
         }
 
         // 1. Hiển thị màn hình Login
@@ -29,28 +35,28 @@ namespace Highlands_WifiPortal.Controllers
         {
             return View();
         }
-        // 2. Xử lý khi người dùng bấm gửi OTP (Nhiệm vụ của Duyên)
+        // 2. Xử lý khi người dùng bấm gửi OTP 
         [HttpPost]
         public async Task<IActionResult> SendOtp(string phone)
         {
-            if (string.IsNullOrEmpty(phone))
+            if (string.IsNullOrEmpty(phone) || phone.Length != 10)
             {
                 ViewBag.Error = "Vui lòng nhập số điện thoại hợp lệ.";
                 return View("Login");
             }
 
-            // BƯỚC 1: Gọi service của TRÌNH để tạo mã OTP
+            // BƯỚC 1: Gọi service để tạo mã OTP
             string otp = _otpService.GenerateOtp(phone);
-
+            TempData["DemoOtp"] = otp;
             // BƯỚC 2: Gọi service của TRÌNH để lưu OTP vào database
             _otpService.SaveOtp(phone, otp);
 
-            // BƯỚC 3: Gọi service của NHÃ để gửi OTP qua Zalo/SMS
+            // BƯỚC 3: Gọi service để gửi OTP qua Zalo/SMS
             bool isSent = await _zaloApiService.SendOtp(phone, otp);
 
             if (isSent)
             {
-                // BƯỚC 4: Chuyển sang màn hình nhập OTP (Nhiệm vụ Duyên)
+                // BƯỚC 4: Chuyển sang màn hình nhập OTp
                 return RedirectToAction("VerifyOtp", new { phone = phone });
             }
             else
@@ -68,22 +74,36 @@ namespace Highlands_WifiPortal.Controllers
             {
                 return RedirectToAction("Login");
             }
-
             ViewBag.Phone = phone;
             return View();
         }
 
-        // 4. Xử lý khi người dùng submit OTP (Nhiệm vụ của Duyên)
+        // 4. Xử lý khi người dùng submit OTP 
         [HttpPost]
         public IActionResult VerifyOtp(string phone, string otp)
         {
             // BƯỚC 1: Gọi service của TRÌNH để kiểm tra OTP (đúng/sai, còn hạn, đã dùng chưa)
             bool isValid = _otpService.VerifyOtp(phone, otp);
-
             if (isValid)
             {
-                // BƯỚC 2: Nếu ĐÚNG -> Tạo phiên truy cập mạng (Session)
                 HttpContext.Session.SetString("UserSession", phone);
+
+                // tìm customer
+                var customer = _context.Customers
+                    .FirstOrDefault(x => x.PhoneNumber == phone);
+
+                // tạo phiên truy cập
+                var accessSession = new AccessSession
+                {
+                    CustomerId = customer.CustomerId,
+                    MacAddress = "demo-mac",
+                    IPAddress = HttpContext.Connection.RemoteIpAddress?.ToString(),
+                    LoginTime = DateTime.Now,
+                    IsAuthenticated = true
+                };
+
+                _context.AccessSessions.Add(accessSession);
+                _context.SaveChanges();
 
                 return RedirectToAction("Success");
             }
@@ -105,6 +125,13 @@ namespace Highlands_WifiPortal.Controllers
             {
                 return RedirectToAction("Login");
             }
+            return View();
+        }
+        
+        [HttpGet]
+        public IActionResult ZaloDemo(string otp)
+        {
+            ViewBag.Otp = otp;
             return View();
         }
     }

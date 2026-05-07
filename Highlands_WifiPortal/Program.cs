@@ -12,7 +12,10 @@ builder.Services.AddControllersWithViews();
 
 // Đăng ký các Mock Services để Controller chạy được
 builder.Services.AddScoped<OtpService>();
+
 builder.Services.AddHttpClient<ZaloApiService>();
+
+builder.Services.AddHttpClient<SmsApiService>();
 // Đăng ký ApplicationDbContext
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
