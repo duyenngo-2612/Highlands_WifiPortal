@@ -1,9 +1,11 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Highlands_WifiPortal.Models
 {
     public class OtpLog
     {
+        [Key]
         public int OtpId { get; set; }
 
         public string PhoneNumber { get; set; }

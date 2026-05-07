@@ -1,35 +1,186 @@
-﻿@ {
-    Layout = null;
+﻿/* =========================================
+   PHẦN 1: GIAO DIỆN SPLASH (MÀN HÌNH CHỜ)
+========================================= */
+/* Thiết lập ảnh nền toàn màn hình cho trang Login/Splash */
+body.highlands-splash {
+    margin: 0;
+    padding: 0;
+    height: 100vh; /* Chiều cao bằng toàn màn hình */
+    /* Gọi file ảnh nền từ thư mục images (sử dụng /images/...) */
+    background-image: url('/images/bg-highlands.jpg');
+    background-size: cover; /* Ảnh phủ kín toàn bộ màn hình */
+    background-position: center; /* Căn giữa bức ảnh */
+    background-repeat: no-repeat; /* Không lặp lại ảnh */
+    position: relative;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-<!DOCTYPE html >
-<html lang="vi" >
-<head >
-<meta charset="utf-8" / >
-<meta name="viewport" content="width=device-width, initial-scale=1.0" / >
-<title > Đăng nhập WiFi - Highlands Coffee</title >
-<link rel="stylesheet" href="~/css/site.css" / >
-</head >
-<body class="captive-portal" >
-<div class="wifi-card" >
-<!-- Đảm bảo bạn đã lưu một file ảnh logo vào thư mục wwwroot/images/ -->
-<img src="~/images/highlands-logo.png" alt="Highlands Coffee Logo" class="brand-logo" / >
+    /* Tùy chọn: Thêm một lớp phủ mờ tối (Overlay) để form nổi bật hơn (như hình mẫu) */
+    body.highlands-splash::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: rgba(0, 0, 0, 0.4); /* Độ mờ đen (0.4), tăng số này nếu nền quá sáng */
+        z-index: 1; /* Nằm dưới form */
+    }
 
-<h2 > Free WiFi</h2 >
-<p class="text-muted" > Vui lòng nhập số điện thoại của bạn để nhận mã OTP và kết nối Internet.</p >
-<!-- Action trỏ về hàm xử lý gửi OTP trong AuthController -->
-<form asp-controller="Auth" asp-action="SendOtp" method="post" >
-<div class="form-group" >
-<input type="tel"
-name="phoneNumber"
-class="form-control"
-placeholder="Nhập số điện thoại (VD: 0912345678)"
-required
-pattern="[0-9]{10}"
-title="Vui lòng nhập số điện thoại gồm 10 chữ số" / >
-</div >
-<button type="submit" class="btn-primary" > GỬI MÃ OTP</button >
-</form >
-</div >
-</body >
-</html >
+.lang-toggle {
+    position: absolute;
+    top: 25px;
+    right: 40px;
+    color: white;
+    font-weight: bold;
+    z-index: 2;
+    font-size: 14px;
+    letter-spacing: 1px;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+}
+
+.footer-copy {
+    position: absolute;
+    bottom: 20px;
+    right: 40px;
+    color: white;
+    font-size: 12px;
+    z-index: 2;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+
+.center-action {
+    position: absolute;
+    top: 75%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+}
+
+.btn-splash {
+    border: none;
+    border-radius: 6px;
+    padding: 12px 35px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-wait {
+    background-color: rgba(90, 45, 45, 0.85);
+    cursor: not-allowed;
+}
+
+.btn-connect {
+    background-color: #d81b21;
+    box-shadow: 0 4px 15px rgba(216, 27, 33, 0.5);
+}
+
+    .btn-connect:hover {
+        background-color: #b5151b;
+    }
+
+/* =========================================
+   PHẦN 2: GIAO DIỆN FORM (LOGIN, OTP, SUCCESS)
+========================================= */
+body.captive-portal {
+    background-color: #f5f1eb;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.wifi-card {
+    background: #ffffff;
+    padding: 40px 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    text-align: center;
+    width: 100%;
+    max-width: 380px;
+    box-sizing: border-box;
+    margin: 20px;
+}
+
+/* Ép logo nhỏ lại vừa vặn với thẻ form */
+.brand-logo {
+    max-width: 150px;
+    height: auto;
+    margin-bottom: 25px;
+}
+
+.wifi-card h2 {
+    color: #b22830;
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 24px;
+}
+
+.text-muted {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 25px;
+    line-height: 1.5;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-control {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #dcdcdc;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+    .form-control:focus {
+        border-color: #b22830;
+        outline: none;
+        box-shadow: 0 0 5px rgba(178, 40, 48, 0.3);
+    }
+
+    .form-control.text-center {
+        text-align: center;
+        letter-spacing: 2px;
+        font-weight: bold;
+    }
+
+.btn-primary {
+    background-color: #b22830;
+    color: white;
+    border: none;
+    padding: 14px;
+    width: 100%;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+    .btn-primary:hover {
+        background-color: #8c1b20;
+    }
+
+.success-icon {
+    width: 80px;
+    height: 80px;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;

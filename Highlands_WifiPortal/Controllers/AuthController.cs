@@ -24,7 +24,11 @@ namespace Highlands_WifiPortal.Controllers
         {
             return View();
         }
-
+        [HttpGet]
+        public IActionResult Splash()
+        {
+            return View();
+        }
         // 2. Xử lý khi người dùng bấm gửi OTP (Nhiệm vụ của Duyên)
         [HttpPost]
         public async Task<IActionResult> SendOtp(string phone)
