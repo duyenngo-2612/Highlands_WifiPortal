@@ -1,6 +1,35 @@
-﻿namespace Highlands_WifiPortal.Views.Auth
-{
-    public class Login
-    {
-    }
+﻿@{
+    Layout = null;
 }
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Đăng nhập WiFi - Highlands Coffee</title>
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body class="captive-portal">
+    <div class="wifi-card">
+        <!-- Đảm bảo bạn đã lưu một file ảnh logo vào thư mục wwwroot/images/ -->
+        <img src="~/images/highlands-logo.png" alt="Highlands Coffee Logo" class="brand-logo" />
+
+        <h2>Free WiFi</h2>
+        <p class="text-muted">Vui lòng nhập số điện thoại của bạn để nhận mã OTP và kết nối Internet.</p>
+
+        <!-- Action trỏ về hàm xử lý gửi OTP trong AuthController -->
+        <form asp-controller="Auth" asp-action="SendOtp" method="post">
+            <div class="form-group">
+                <input type="tel"
+                       name="phoneNumber"
+                       class="form-control"
+                       placeholder="Nhập số điện thoại (VD: 0912345678)"
+                       required
+                       pattern="[0-9]{10}"
+                       title="Vui lòng nhập số điện thoại gồm 10 chữ số" />
+            </div>
+            <button type="submit" class="btn-primary">GỬI MÃ OTP</button>
+        </form>
+    </div>
+</body>
+</html>

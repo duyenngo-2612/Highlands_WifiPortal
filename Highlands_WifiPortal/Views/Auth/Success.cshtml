@@ -1,6 +1,28 @@
-﻿namespace Highlands_WifiPortal.Views.Auth
-{
-    public class Success
-    {
-    }
+﻿@{
+    Layout = null;
 }
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kết nối thành công - Highlands Coffee</title>
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body class="captive-portal">
+    <div class="wifi-card">
+        <!-- Dấu tick xanh thành công -->
+        <div class="success-icon">
+            ✓
+        </div>
+
+        <h2>Connected to Internet</h2>
+        <p class="text-muted">Tuyệt vời! Thiết bị của bạn đã được kết nối WiFi thành công. Chúc bạn có một trải nghiệm thú vị tại Highlands Coffee.</p>
+
+        <!-- Nút này có thể dùng để điều hướng người dùng tới trang chủ Highlands hoặc đóng portal -->
+        <a href="https://www.highlandscoffee.com.vn" class="btn-primary" style="display: block; text-decoration: none; box-sizing: border-box;">
+            Bắt đầu lướt Web
+        </a>
+    </div>
+</body>
+</html>
