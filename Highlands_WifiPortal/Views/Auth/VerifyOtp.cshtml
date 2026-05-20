@@ -1,6 +1,120 @@
-﻿namespace Highlands_WifiPortal.Views.Auth
-{
-    public class VerifyOtp
-    {
-    }
+﻿
+@{
+    Layout = null;
 }
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Xác thực OTP - Highlands Coffee</title>
+    <style>
+        body.highlands-splash {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background-image: url('/images/bg-highlands.jpg');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+            body.highlands-splash::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                background: rgba(0, 0, 0, 0.4);
+                z-index: 1;
+            }
+
+        .login-overlay-box {
+            position: relative;
+            background-color: rgba(162, 131, 99, 0.95);
+            padding: 40px;
+            border-radius: 12px;
+            z-index: 3;
+            text-align: center;
+            min-width: 350px;
+        }
+
+        .title-otp {
+            color: white;
+            font-size: 22px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .sub-otp {
+            color: #f0e0d0;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        .input-row {
+            margin-bottom: 30px;
+        }
+
+            .input-row input {
+                background: transparent;
+                border: none;
+                border-bottom: 2px solid white;
+                color: white;
+                font-size: 24px;
+                width: 180px;
+                outline: none;
+                text-align: center;
+                font-weight: bold;
+                letter-spacing: 5px;
+            }
+
+        .btn-connect {
+            background-color: #d81b21;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 12px 40px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .error-msg {
+            color: #ffcccc;
+            font-size: 14px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body class="highlands-splash">
+    <div class="login-overlay-box">
+        <div class="title-otp">Xác nhận mã OTP</div>
+        <div class="sub-otp">Mã xác thực đã được gửi đến số:<br><strong>@ViewBag.Phone</strong></div>
+
+        <form asp-controller="Auth" asp-action="VerifyOtp" method="post">
+            <input type="hidden" name="phone" value="@ViewBag.Phone" />
+            <div class="input-row">
+                <input type="text" name="otp" placeholder="xxxxxx" required maxlength="6" autocomplete="off" />
+            </div>
+
+            @if (ViewBag.Error != null)
+            {
+                <div class="error-msg">@ViewBag.Error</div>
+            }
+
+            <button type="submit" class="btn-connect">XÁC NHẬN KẾT NỐI</button>
+        </form>
+    </div>
+</body>
+</html>
+<script>
+    window.open('/Auth/ZaloDemo?otp=@TempData["DemoOtp"]',
+        '_blank',
+        'width=400,height=700');
+</script>

@@ -1,6 +1,85 @@
-﻿namespace Highlands_WifiPortal.Views.Auth
-{
-    public class Success
-    {
-    }
+﻿@{
+    Layout = null;
 }
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kết nối thành công - Highlands Coffee</title>
+    <style>
+        body.highlands-splash {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background-image: url('/images/bg-highlands.jpg');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+            body.highlands-splash::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                background: rgba(0, 0, 0, 0.4);
+                z-index: 1;
+            }
+
+        .login-overlay-box {
+            position: relative;
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 50px;
+            border-radius: 15px;
+            z-index: 3;
+            text-align: center;
+            max-width: 400px;
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 45px;
+            margin: 0 auto 20px auto;
+        }
+
+        h2 {
+            color: #b22830;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #555;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body class="highlands-splash">
+    <div class="login-overlay-box">
+        <div class="success-icon">✓</div>
+        <h2>Đã kết nối!</h2>
+        <p>Chúc mừng bạn đã kết nối Internet thành công tại Highlands Coffee.</p>
+        <p style="font-size: 13px; color: #888;">Đang chuyển hướng về trang chủ...</p>
+    </div>
+
+    <script>
+        // Tự động chuyển về trang chủ sau 3 giây
+        setTimeout(function() {
+            window.location.href = "https://www.highlandscoffee.com.vn/";
+        }, 3000);
+    </script>
+</body>
+</html>

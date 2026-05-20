@@ -1,0 +1,50 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Highlands Coffee Free WiFi</title>
+    <link rel="stylesheet" href="/css/site.css?v=1" />
+</head>
+<body class="highlands-splash">
+
+    <div class="lang-toggle">VN | EN</div>
+
+    <div class="center-action">
+        <button id="connectBtn" class="btn-splash btn-wait" disabled>Vui lòng chờ... 5 giây</button>
+    </div>
+
+    <div class="footer-copy">© 2026 Highlands Coffee.</div>
+
+    <script>
+        let timeLeft = 5;
+        const btn = document.getElementById('connectBtn');
+
+        const countdown = setInterval(() => {
+            timeLeft--;
+            if (timeLeft > 0) {
+                // Đang đếm ngược
+                btn.innerText = `Vui lòng chờ... ${timeLeft} giây`;
+            } else {
+                // Đã đếm xong
+                clearInterval(countdown);
+                btn.innerText = 'Kết nối Internet';
+
+                // Đổi CSS từ trạng thái chờ sang trạng thái nhấn được
+                btn.classList.remove('btn-wait');
+                btn.classList.add('btn-connect');
+                btn.disabled = false;
+
+                // Sự kiện khi click vào nút "Kết nối Internet"
+                btn.onclick = function() {
+                    console.log("Đang chuyển hướng sang trang Login...");
+                    window.location.href = '/Auth/Login';
+                };
+            }
+        }, 1000); // 1000ms = 1 giây
+    </script>
+</body>
+</html>
