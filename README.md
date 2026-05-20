@@ -1,5 +1,4 @@
 # Highlands_WifiPortal
-# Highlands Wifi Portal
 
 ## Giới thiệu
 
